@@ -5,14 +5,16 @@ using UnityEngine;
 public class UIPresenter : MonoBehaviour
 {
     [SerializeField]
-    private UIViewController _uIViewController;
+    private UIViewController _uIViewController; // UIを制御するビューコントローラー
+
     void Awake()
     {
-        CacheManager.instnace.OnCacheChange += i => _uIViewController.SetChacheText(i);
+        // キャッシュ変更時のイベントを受け取ってUIに反映する
+        CacheManager.instance.OnCacheChange += i => _uIViewController.SetChacheText(i);
     }
 
     void Update()
     {
-
+        // 何もしない
     }
 }
