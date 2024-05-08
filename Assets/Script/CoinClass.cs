@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinClass : MonoBehaviour
 {
-    public Transform _followRigidbody;
+    public Transform _followParent;
     void Start()
     {
         
@@ -12,8 +12,8 @@ public class CoinClass : MonoBehaviour
 
     void Update()
     {
-        if (_followRigidbody == null) return;
-        transform.position += _followRigidbody.position;
+        if (_followParent == null) return;
+        transform.position += _followParent.position;
         
     }
 }

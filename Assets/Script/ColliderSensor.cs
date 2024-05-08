@@ -4,28 +4,28 @@ using UnityEngine;
 using System;
 public class ColliderSensor : MonoBehaviour
 {
-    private Action<GameObject> _onCollision;
-    public event Action<GameObject> OnCollision
+    private Action<GameObject> _onTriggerEnter;
+    public event Action<GameObject> OnTriggerEnterObject
     {
         add
         {
-            _onCollision = value;
+            _onTriggerEnter = value;
         }
         remove
         {
-            _onCollision = value;
+            _onTriggerEnter = value;
         }
     }
-    private Action<GameObject> _onExitCollision;
-    public event Action<GameObject> OnExitCollision
+    private Action<GameObject> _onTriggerExit;
+    public event Action<GameObject> OnTriggerExitObject
     {
         add
         {
-            _onExitCollision = value;
+            _onTriggerExit = value;
         }
         remove
         {
-            _onExitCollision = value;
+            _onTriggerExit = value;
         }
     }
 
@@ -38,12 +38,16 @@ public class ColliderSensor : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        _onCollision(collision.gameObject);
+        if (_onTriggerEnter != null)
+            _onTriggerEnter(other.gameObject);
+
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        _onExitCollision(collision.gameObject);
+        if(_onTriggerExit != null)
+        _onTriggerExit(other.gameObject);
+
     }
 }

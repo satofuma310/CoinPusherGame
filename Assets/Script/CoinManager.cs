@@ -17,9 +17,9 @@ public class CoinManager : MonoBehaviour
     private ObjectPool<CoinClass> coinPool;
     void Start()
     {
-        clearCollider.OnCollision += i =>
+        clearCollider.OnTriggerEnterObject += i =>
             {
-                
+                CacheManager.instnace.Cache++;
             };
         coinPool =
         new ObjectPool<CoinClass>(
@@ -48,15 +48,10 @@ public class CoinManager : MonoBehaviour
     {
         var coin = Instantiate(coinPrefab.gameObject, coinInstancePosition.position, Quaternion.identity).GetComponent<CoinClass>();
         var sensor = coin.gameObject.AddComponent<ColliderSensor>();
-        sensor.OnCollision += i =>
+        sensor.OnTriggerEnterObject += i =>
         {
             if (!i.CompareTag(Tag.FollowObject.ToString())) return;
-            coin._followRigidbody = moveTarget;
-        };
-        sensor.OnExitCollision += i =>
-        {
-            //if (!i.CompareTag(Tag.FollowObject.ToString())) return;
-            //coin.transform.SetParent(null,false);
+            coin.transform.SetParent(i.transform);
         };
         var coinRigidbody = coin.GetComponent<Rigidbody>();
         var randomCircle = Random.insideUnitCircle;
